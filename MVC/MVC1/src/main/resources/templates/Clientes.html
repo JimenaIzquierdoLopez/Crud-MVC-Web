@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<!--
+Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this template
+-->
+<html>
+    <head>
+        <title>Registro de Clientes</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
+
+    </head>
+
+    <body>
+
+        <div th:replace="~{navegacion :: navegacion}"></div>
+        <div class="container mt-4 mb-5">
+
+    <div class="text-center mb-4">
+        <h1 class="fw-bold">REGISTRO DE CLIENTES</h1>
+        <p class="text-muted">
+            Administración de clientes
+        </p>
+    </div>
+
+        <p th:if="${error}" th:text="${error}"></p>
+
+        <form th:action="@{/clientes/guardar}" th:object="${cliente}" method="post">
+
+            <input class="form-control" type="hidden" th:field="*{idCliente}">
+
+            <div class="col-md-6">
+
+    <label class="form-label">
+        NIT
+    </label>
+
+    <input class="form-control" type="text" th:field="*{nit}" placeholder="Ingrese el NIT">
+
+</div>
+
+            <div class="col-md-6">
+
+    <label class="form-label">
+        Nombre
+    </label>
+
+    <input class="form-control" type="text" th:field="*{nombre}" placeholder="Ingrese el nombre">
+
+</div>
+
+            <div class="col-md-6">
+
+    <label class="form-label">
+        Apellidos
+    </label>
+
+    <input class="form-control" type="text" th:field="*{apellidos}" placeholder="Ingrese los apellidos">
+    
+            <div class="col-md-6">
+    <label class="form-label">
+        Email
+    </label>
+
+    <input class="form-control"type="text" th:field="*{email}" placeholder="Ingrese el correo electrónico">
+
+</div>
+
+            <button class="btn btn-secondary" type="submit">
+                Guardar
+            </button>
+
+        </form>
+
+        <br>
+
+        <table border="1" class="table table-striped-columns">
+
+            <tr>
+                <th>ID</th>
+                <th>NIT</th>
+                <th>NOMBRE</th>
+                <th>APELLIDOS</th>
+                <th>EMAIL</th>
+                <th>ACCIONES</th>
+            </tr>
+
+            <tr th:each="c : ${clientes}">
+
+                <td th:text="${c.idCliente}"></td>
+
+                <td th:text="${c.nit}"></td>
+
+                <td th:text="${c.nombre}"></td>
+
+                <td th:text="${c.apellidos}"></td>
+
+                <td th:text="${c.email}"></td>
+
+                <td>
+
+                    <a class="btn btn-light"th:href="@{/clientes/editar/{id}(id=${c.idCliente})}">
+                        Editar
+                    </a>
+
+                    <form th:action="@{/clientes/eliminar/{id}(id=${c.idCliente})}" method="post">
+
+                        <button class="btn btn-dark" type="submit">
+                            Eliminar
+                        </button>
+
+                    </form>
+
+                </td>
+
+            </tr>
+
+        </table>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" crossorigin="anonymous"></script>
+
+    </body>
+</html>
